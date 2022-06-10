@@ -1,0 +1,59 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 16 Temperature: 8 Vector__XXX
+ SG_ CJTemp : 0|8@1+ (1,-128) [-128|127] "degC" Vector__XXX
+ SG_ TLStatus : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TLTemp : 10|12@1+ (1,-2048) [-2048|2047] "degC" Vector__XXX
+ SG_ TRStatus : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BLStatus : 36|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BLTemp : 38|12@1+ (1,-2048) [-2048|2047] "degC" Vector__XXX
+ SG_ BRTemp : 52|12@1+ (1,-2048) [-2048|2047] "degC" Vector__XXX
+ SG_ TRTemp : 24|12@1+ (1,-2048) [-2048|2047] "degC" Vector__XXX
+ SG_ BRStatus : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+
+
+
+CM_ SG_ 16 CJTemp "Cold junction temperature";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+VAL_ 16 TLStatus 0 "OK" 1 "Err1" 2 "Err2" 3 "Err3" ;
+VAL_ 16 TRStatus 0 "OK" 1 "Err1" 2 "Err2" 3 "Err3" ;
+VAL_ 16 BLStatus 0 "OK" 1 "Err1" 2 "Err2" 3 "Err3" ;
+VAL_ 16 BRStatus 0 "OK" 1 "Err1" 2 "Err2" 3 "Err3" ;
+

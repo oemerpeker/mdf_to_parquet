@@ -1,6 +1,7 @@
 from asammdf import MDF
 import pandas as pd
 import pyarrow as pa
+import pyarrow.parquet as pq
 import os
 import duckdb
 import time
@@ -40,13 +41,14 @@ def search_query(file_path):
     return query
 
 
-def insert_query(file_path):
+def precise_search_query(file_path):
+    query = duckdb.query('''
+        SELECT *
+        FROM "''' + file_path + '''" 
+        WHERE timestamps BETWEEN 0.01485 AND 0.01486
+        ''').fetchall()
 
-    duckdb.query('''
-    INSERT INTO "''' + file_path + '''" 
-    VALUES (557, 1, 2024, 0, 8, [4,65,12,13,224,255,255,255], 0, 0, 0);
-    ''')
-    return None
+    return query
 
 
 files = read_mdf_files(selected_mode)
@@ -89,6 +91,31 @@ avg_parquet = round((total_time_parquet/100)/1000000000, 4)
 
 print("Abfragedauer bei CSV: c.a. " + str(avg_csv) + "s")
 print("Abfragedauer bei Parquet: c.a. " + str(avg_parquet) + "s")
+
+total_time_csv = 0
+total_time_parquet = 0
+for i in range(0, 100):
+    t0 = time.time_ns()
+    result = precise_search_query(file_path_csv)
+    t1 = time.time_ns()
+    difference = t1 - t0
+    total_time_csv += difference
+
+    t0 = time.time_ns()
+    result = precise_search_query(file_path_parquet)
+    t1 = time.time_ns()
+    difference = t1 - t0
+    total_time_parquet += difference
+
+avg_csv = round((total_time_csv/100)/1000000000, 6)
+avg_parquet = round((total_time_parquet/100)/1000000000, 6)
+
+print("Abfragedauer (Präzise) bei CSV: c.a. " + str(avg_csv) + "s")
+print("Abfragedauer (Präzise) bei Parquet: c.a. " + str(avg_parquet) + "s")
+
+
+
+
 
 
 
